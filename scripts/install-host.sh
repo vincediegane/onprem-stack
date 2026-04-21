@@ -5,6 +5,19 @@
 # =====================================================
 set -euo pipefail
 [ "$(id -u)" -eq 0 ] || { echo "run as root"; exit 1; }
+# Charger les variables d'environnement (ID, VERSION_CODENAME)
+. /etc/os-release
+echo "OS Détecté : $ID"
+if [[ "$ID" != "ubuntu" && "$ID" != "debian" ]]; then
+  echo "OS non supporté : $ID"
+  exit 1
+fi
+
+# Charger VERSION_CODENAME
+VERSION_CODENAME=$(echo $VERSION | cut -d'(' -f2 | cut -d')' -f1)
+echo "Version : $VERSION_CODENAME"
+
+echo "Mise à jour du système et installation des paquets essentiels..."
 
 apt update && apt -y upgrade
 apt -y install ca-certificates curl gnupg ufw fail2ban unattended-upgrades rsync
