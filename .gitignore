@@ -1,0 +1,44 @@
+# Configuration
+.env
+.env.*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor / IDE
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+*.tmp
+*~
+
+# Docker / compose
+docker-compose.override.yml
+docker-compose.*.yml
+
+# Maven build outputs
+**/target/
+
+# Logs
+*.log
+
+# Backup / temporary files
+*.bak
+*.old
+*.orig
+*.tmp
+
+# Secrets and local data
+secrets/
+*/secrets/
+
+# Ignore local-only state
+.env.local
+
+# Linux system temp
+/tmp/
