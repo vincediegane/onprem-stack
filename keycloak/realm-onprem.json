@@ -1,0 +1,83 @@
+{
+  "realm": "onprem",
+  "enabled": true,
+  "displayName": "OnPrem SSO",
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": true,
+  "rememberMe": true,
+  "sslRequired": "external",
+  "accessTokenLifespan": 900,
+  "ssoSessionIdleTimeout": 1800,
+  "roles": {
+    "realm": [
+      { "name": "user",  "description": "Utilisateur standard" },
+      { "name": "admin", "description": "Administrateur" }
+    ]
+  },
+  "groups": [
+    { "name": "employees" },
+    { "name": "admins" }
+  ],
+  "users": [
+    {
+      "username": "alice",
+      "enabled": true,
+      "email": "alice@onprem.local",
+      "firstName": "Alice",
+      "lastName": "Demo",
+      "emailVerified": true,
+      "credentials": [{ "type": "password", "value": "Alice123!", "temporary": false }],
+      "realmRoles": ["user"],
+      "groups": ["/employees"]
+    },
+    {
+      "username": "bob",
+      "enabled": true,
+      "email": "bob@onprem.local",
+      "firstName": "Bob",
+      "lastName": "Admin",
+      "emailVerified": true,
+      "credentials": [{ "type": "password", "value": "Bob123!", "temporary": false }],
+      "realmRoles": ["admin", "user"],
+      "groups": ["/admins"]
+    }
+  ],
+  "clients": [
+    {
+      "clientId": "nextcloud",
+      "name": "Nextcloud GED",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": false,
+      "secret": "CHANGE_ME_NEXTCLOUD_SECRET",
+      "redirectUris": [
+        "https://cloud.onprem.local/*",
+        "https://cloud.onprem.local/apps/user_oidc/code"
+      ],
+      "webOrigins": ["https://cloud.onprem.local"],
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": false,
+      "attributes": {
+        "post.logout.redirect.uris": "https://cloud.onprem.local/*"
+      },
+      "defaultClientScopes": ["profile", "email", "roles"]
+    },
+    {
+      "clientId": "intranet",
+      "name": "Intranet Spring Boot",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": true,
+      "bearerOnly": false,
+      "redirectUris": ["https://intranet.onprem.local/*"],
+      "webOrigins": ["https://intranet.onprem.local"],
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": false,
+      "attributes": {
+        "pkce.code.challenge.method": "S256"
+      }
+    }
+  ]
+}

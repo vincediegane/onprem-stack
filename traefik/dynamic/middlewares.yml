@@ -1,0 +1,23 @@
+# Middlewares dynamiques Traefik
+http:
+  middlewares:
+    sec-headers:
+      headers:
+        frameDeny: true
+        contentTypeNosniff: true
+        browserXssFilter: true
+        referrerPolicy: "strict-origin-when-cross-origin"
+        stsSeconds: 31536000
+        stsIncludeSubdomains: true
+        stsPreload: true
+        customRequestHeaders:
+          X-Forwarded-Proto: "https"
+        customResponseHeaders:
+          Permissions-Policy: "geolocation=(), microphone=(), camera=()"
+
+    nc-redirect:
+      # Redirections WebDAV requises par Nextcloud derrière proxy
+      redirectRegex:
+        permanent: true
+        regex: "https://([^/]*)/.well-known/(card|cal)dav"
+        replacement: "https://$${1}/remote.php/dav/"
