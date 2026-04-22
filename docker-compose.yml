@@ -32,6 +32,8 @@ services:
   # ============== TRAEFIK (reverse proxy + TLS) ==============
   traefik:
     image: traefik:v3.1
+    environment:
+      - DOCKER_API_VERSION=1.40
     container_name: traefik
     restart: unless-stopped
     command:
